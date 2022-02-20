@@ -16,3 +16,4 @@ Daskom recruitment website is a website related to the recruitment of new [Dasko
 ## Develop by:
 - [Adhi Muhammad Fahmi](https://github.com/adhiiimf) [AMF]
 - [Soediponegoro](https://github.com/soedipo) [DIP]
+- [Ferry Chandra](https://github.com/ferry5245) [FEY]
