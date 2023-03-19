@@ -31,7 +31,7 @@ class CaasController extends Controller
 
     public function logout(){
         Auth::guard('datacaas')->logout();
-        return redirect('loginCaas'); // disesuaikan sama nama routnya
+        return redirect('caas'); // disesuaikan sama nama routnya
     }
 
     public function home(){

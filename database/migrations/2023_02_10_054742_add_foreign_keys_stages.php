@@ -13,11 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('stages', function (Blueprint $table) {
-            $table->foreign('statusstages_id', 'fk_stages_to_statusstages')->references('id')
-                ->on('statusstages')
-                ->onDelete('cascade');
-        });
+
     }
 
     /**
@@ -27,8 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('stages', function (Blueprint $table) {
-            $table->dropForeign('fk_stages_to_statusstages');
-        });
+
     }
 };
