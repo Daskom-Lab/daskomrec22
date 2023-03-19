@@ -13,9 +13,9 @@ class RedirectIfAuthenticated
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param  string|null  ...$guards
-     * @return mixed
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
@@ -23,18 +23,14 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             switch ($guard) {
                 case 'datacaas':
-                    if (Auth::guard($guard)->check()) 
-                        return redirect()->route('home');
+                    if (Auth::guard($guard)->check())
+                        return redirect()->route('dashboard');
                     break;
                 case 'admin':
-                    if (Auth::guard($guard)->check()) 
+                    if (Auth::guard($guard)->check())
                         return redirect()->route('adminHome');
                     break;
-                case 'logistik':
-                    if (Auth::guard($guard)->check()) 
-                        return redirect('/logistikplot');
-                    break;    
-              }
+            }
         }
 
         return $next($request);

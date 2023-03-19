@@ -1,8 +1,12 @@
 <?php
 
 namespace Database\Seeders;
-use Illuminate\Support\Facades\DB;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\DataCaas;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,17 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cekluluses')->insert([
-            [
-                'id'=>1,
-                'isActiveCek'=>0,
-                'isPlotRun'=>0,
-            ],
-        ]);
-
-        DB::table('statustahaps')->insert([
-            'id' => 1,
-            'current_tahap' => 1,
+        $this->call([
+            PassCheckMessageSeeder::class,
+            PassCheckSeeder::class,
+            AdminSeeder::class,
+            StagesSeeder::class,
+            DatacaasSeeder::class,
+            AssistantContactSeeder::class,
         ]);
     }
 }

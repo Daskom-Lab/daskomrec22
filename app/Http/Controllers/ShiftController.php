@@ -2,101 +2,96 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PassCheck;
+use App\Models\Plots;
+use App\Models\Shifts;
+use App\Models\Stages;
 use Illuminate\Http\Request;
-use App\Models\Datacaas;
-use App\Models\Status;
-use App\Models\Tahap;
-use App\Models\Statustahap;
-use App\Models\Namatahap;
-use App\Models\Ceklulus;
-use App\Models\Shift;
-use App\Models\Plot;
-use App\Models\Plotactive;
-use App\Models\Messageceklulus;
-use Route;
-use App\Http\Controllers\Controller;
 
 class ShiftController extends Controller
 {
-    
     public function ListShift()
     {
-        $shift = Shift::orderBy('hari','asc')->orderBy('jam_start','asc')->paginate(10);
-        $countshift = Shift::count();
-        $namatahap = Namatahap::all();
-        $ceklulus = Ceklulus::where('id',1)->first();
+        $data['shift'] = Shifts::orderBy('day', 'asc')->orderBy('time_start', 'asc')->paginate(10);
+        $data['countshift'] = Shifts::count();
+        $data['stagesname'] = Stages::select('stagesname')->get();
+        $data['passcheck'] = PassCheck::where('id', 1)->first();
         \Carbon\Carbon::setLocale('id');
-        return view('shift',compact('shift','namatahap','ceklulus','countshift'));
+        return view('shift', ['data' => $data]);
     }
 
-    public function addShift(Request $request){
-        Shift::create([
-            'namashift'=>$request->namashift,
-            'hari'=>$request->hari,
-            'jam_start'=>$request->jam_start,
-            'jam_end'=>$request->jam_end,
-            'kuota'=>$request->kuota,
+    public function addShift(Request $request)
+    {
+        Shifts::create([
+            'shiftname' => $request->shiftname,
+            'day' => $request->day,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
+            'quota' => $request->quota,
         ]);
         return redirect('ListShift');
     }
 
-    public function EditShift($id){
-        $shift = Shift::where('id',$id)->first();
-        $ceklulus = Ceklulus::where('id',1)->first();
-        if($ceklulus->isPlotRun==0)
-        return view('editshift',[
-            'id'=>$shift->id,
-            'namashift'=>$shift->namashift,
-            'hari'=>$shift->hari,
-            'jam_start'=>$shift->jam_start,
-            'jam_end'=>$shift->jam_end,
-            'kuota'=>$shift->kuota,
-        ]);
+    public function EditShift($id)
+    {
+        $shift = Shifts::where('id', $id)->first();
+        $passcheck = PassCheck::where('id', 1)->first();
+        if ($passcheck->isPlotRun == 0)
+            return view('editshift', [
+                'id' => $shift->id,
+                'namashift' => $shift->shiftname,
+                'hari' => $shift->day,
+                'time_start' => $shift->time_start,
+                'time_end' => $shift->time_end,
+                'quota' => $shift->quota,
+            ]);
         else return redirect('ListShift');
     }
 
-    public function UpdateShift($id, Request $request){
-        $ceklulus = Ceklulus::where('id',1)->first();
-        if($ceklulus->isPlotRun==0){
-        Shift::where('id',$id)->update([
-            'namashift'=>$request->namashift,
-            'hari'=>$request->hari,
-            'jam_start'=>$request->jam_start,
-            'jam_end'=>$request->jam_end,
-            'kuota'=>$request->kuota,
-        ]);
-        return redirect('ListShift');}
+    public function UpdateShift($id, Request $request)
+    {
+        $passcheck = PassCheck::where('id', 1)->first();
+        if ($passcheck->isPlotRun == 0) {
+            Shifts::where('id', $id)->update([
+                'shiftname' => $request->shiftname,
+                'day' => $request->day,
+                'time_start' => $request->time_start,
+                'time_end' => $request->time_end,
+                'quota' => $request->quota,
+            ]);
+            return redirect('ListShift');
+        } else return redirect('ListShift');
+    }
+
+    public function delShift($id)
+    {
+        $passcheck = PassCheck::where('id', 1)->first();
+        if ($passcheck->isPlotRun == 0) {
+            $shift = Shifts::where('id', $id)->delete();
+            return redirect('ListShift');
+        } else return redirect('ListShift');
+    }
+
+    public function delShiftConfirm($id)
+    {
+        $shift = Shifts::where('id', $id)->first();
+        $passcheck = PassCheck::where('id', 1)->first();
+        if ($passcheck->isPlotRun == 0)
+            return view('delshift', [
+                'id' => $shift->id,
+                'shiftname' => $shift->shiftname,
+                'day' => $shift->day,
+                'time_start' => $shift->time_start,
+                'time_end' => $shift->time_end,
+                'quota' => $shift->quota,
+            ]);
         else return redirect('ListShift');
     }
 
-    public function delShiftConfirm($id){
-        $shift = Shift::where('id',$id)->first();
-        $ceklulus = Ceklulus::where('id',1)->first();
-        if($ceklulus->isPlotRun==0)
-        return view('delshift',[
-            'id'=>$shift->id,
-            'namashift'=>$shift->namashift,
-            'hari'=>$shift->hari,
-            'jam_start'=>$shift->jam_start,
-            'jam_end'=>$shift->jam_end,
-            'kuota'=>$shift->kuota,
-        ]);
-        else return redirect('ListShift');
-    }
-
-    public function delShift($id){
-        $ceklulus = Ceklulus::where('id',1)->first();
-        if($ceklulus->isPlotRun==0){
-        $shift = Shift::where('id',$id)->delete();
-        return redirect('ListShift');}
-        else return redirect('ListShift');
-    }
-
-    public function deleteAll(){
-        $shift = Shift::whereNotNull('id')->delete();
-        $plot = Plot::whereNotNull('id')->delete();
-        $plotstatus = Plotactive::whereNotNull('id')->delete();
+    public function deleteAll()
+    {
+        $shift = Shifts::whereNotNull('id')->delete();
+        $plot = Plots::whereNotNull('id')->delete();
         return redirect('ListShift');
     }
-
 }

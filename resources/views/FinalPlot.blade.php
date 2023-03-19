@@ -1,98 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Explore the Jungle with Daskom</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/favicon/apple-touch-icon.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/favicon/favicon-32x32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/favicon/favicon-16x16.png') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/navbar-ex.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/footer.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/login-caas-finalplot.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/about.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/home.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/form-style.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/list.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('/css/main.css') }}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
-</head>
-
-<body style="background-color: #2c4d16;">
-
-  @include('layouts/navbarCaasLogout')
-  @section('navcaaslogout')
-  @endsection
-
-  <section id="landing-section">
-    <div class="container pb-5">
-      <div class="pt-5 pb-3 d-flex justify-content-center">
-        <div style="background-color: #FFC844" class="checker-box">
-          <div class="text-center text-nim-head">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore the Milky Way</title>
+    @vite('public/css/output.css')
+    <link rel="icon" type="DLOR" href="{{ asset('/assets/favicon.ico') }}" />
+ </head>
+ <body class="bg-dark-space bg-black bg-cover cursor-space-ship">
+  <section>
+    <div class="pt-32">
+      <div class="flex justify-center font-arcade text-xl">
+        <div class="bg-dark-sky text-white p-4 rounded-lg shadow-semi-lg shadow-bright-sun">
+          <div class="text-center pt-4">
             <span>JADWAL RECRUITMENT</span>
           </div>
           <div class="text-center pt-3 pb-3">
-            <div class="pb-2 text-nim">
-              <span >Kamu telah memilih jadwal praktikum, dan jadwal tersebut tidak dapat diubah kembali. Terima kasih!</span>
+            <div class="pb-2">
+              <span >Kamu telah memilih jadwal, dan jadwal tersebut tidak dapat diubah kembali. Terima kasih!</span>
             </div>
-            @if($caas->isLolos==0)
-            <div class="pt-3 pb-3" style="background-color: #cc4147;border-radius: 1rem;padding: 0 20px 0 20px;">
-              <span style="color: rgb(219, 219, 219);font-size:25px;font-weight:700;">{{ $firstmeet->afterChoosePlot }}</span>
-            </div>
-            @else
-            @endif
             <div class="pt-2">
-              <span class="Welcome-text-semibold">{{$plots->namashift}}</span>
+              <span class="text-green-400">{{$plots->shiftname}}</span>
             </div>
-            @if($caas->isLolos==1 && $firstmeet->isPlotFirstmeet==0)
+            @if($datacaas->isPass==1)
             <div class="pt-2">
-              <span class="Welcome-text-semibold">Tanggal : {{\Carbon\Carbon::parse($plots->hari)->isoFormat('dddd, D MMMM Y')}}</span>
+              <span class="">Tanggal &nbsp:&nbsp {{\Carbon\Carbon::parse($plots->day)->isoFormat('dddd, D MMMM Y')}}</span>
             </div>
             @else
             @endif
             <div class="pt-3">
-              <span class="Welcome-text-semibold">Waktu : {{$plots->jam_start}} - {{$plots->jam_end}} WIB</span>
+              <span class="">Waktu &nbsp:&nbsp {{$plots->time_start}} - {{$plots->time_end}} WIB</span>
             </div>
-            <div class="pt-4 text-center text-nim-head">
-              <span style="color: rgb(5, 158, 5)">Semangat dan pantau terus informasi di OA Line Recruitment Daskom Laboratory untuk instruksi berikutnya.</span>
+            <div class="pt-10">
+              <span>Semangat dan pantau terus informasi di OA Line Recruitment Daskom Laboratory untuk instruksi berikutnya.</span>
             </div>
-            <div class="d-flex justify-content-center pt-2">
-              <div>
-                <a href="https://www.instagram.com/telu.daskom/" target="_blank"><img class="social-icon mx-2" src="{{ asset('/assets/instagram.png') }}" alt="ig"></a>
-              </div>
-              <div class="">
-                <a href="https://timeline.line.me/user/_dbhqzOurXL1CbjNxhYBPzSbYBVWZFDnFa5_ashs" target="_blank"><img class="social-icon mx-2" src="{{ asset('/assets/line.png') }}" alt="ig"></a>
-              </div>
+            <div class="flex justify-center">
+                <a class="flex justify-center w-24 h-10 mt-2 text-lg bg-red-700 text-center text-red-300 font-arcade shadow-in-semi-sm shadow-white rounded-[8px] duration-200 hover:shadow-[0px_0px_8px_2px_#F0A164] hover:bg-[#233B4E] active:shadow-[inset_0px_0px_8px_2px_#ffd0a9] " href="/dashboard">
+                    <button class="text-white font-arcade items-center hover:text-lg active:text-base">
+                    Kembali
+                    </button>
+                </a>
             </div>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center pb-2">
-        <a style="text-decoration: none" href="\home">
-          <button style="background-color: #FF4E4E;color: whitesmoke;" class="home-button">
-            <div class="menu-box-home">
-              <div>
-                KEMBALI
-              </div>
-            </div>
-          </button>
-        </a>
       </div>
     </div>
   </section>
-  @include('layouts/about')
+  {{-- @include('layouts/about')
   @section('aboutdaskom')
   @endsection
-  
+
   @include('layouts/footer')
   @section('footer')
-  @endsection
+  @endsection --}}
 </body>
 
 </html>
