@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('stagesname');
             $table->boolean('statusActive');
-            $table->foreignId('statusstages_id')->unsigned()->index('fk_stages_to_statusstages');
             $table->timestamps();
         });
     }
