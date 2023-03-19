@@ -36,9 +36,9 @@ Route::fallback(function () {
     return redirect('/');
 });
 
-Route::get('/loginCaas', function () {
+Route::get('/caas', function () {
     return view('loginCaas');
-})->name('loginCaas')->middleware('guest:admin','guest:datacaas');
+})->name('caas')->middleware('guest:admin','guest:datacaas');
 
 Route::get('/dashboard', [CaasController::class, 'home'])->name('dashboard')->middleware('auth:datacaas');
 
